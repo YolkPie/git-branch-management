@@ -228,10 +228,13 @@ git merge --no--ff release-v1.0
 git checkout master
 git merge --no--ff release-v1.0
 ```
-5. 再master分支打上tag
+5. 在master分支打上tag
 ```
 git tag v1.0_21.2.3
+git push origin --tags
 ```
+
+**修复线上问题**
 
 
 
