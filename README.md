@@ -261,8 +261,19 @@ git push origin v1.3_21.2.2
 git branch -D fixbug-v1.0
 ```
 
-**线上回退到某tag**
-
+**线上回退至指定tag**
+1. 切换至master分支
+``` js
+git checkout master
+```
+2. 指针定向至指定tag
+``` js
+git reset --hard v1.4_21.2.2
+```
+3. 强制推送回滚
+``` js
+git push --force origin master
+```
 
 
 
