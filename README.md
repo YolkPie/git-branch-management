@@ -235,8 +235,17 @@ git push origin --tags
 ```
 
 **修复线上问题**
-
-
+1. 新建fixbug分支，指向出问题的tag
+``` js
+git checkout -b fixbug-v1.0 v1.0_21.2.2    
+```
+2. 修复问题并测试通过后分别合并至dev及master分支
+```
+git checkout dev
+git merge --no--ff fixbug-v1.0
+git checkout master
+git merge --no--ff fixbug-v1.0
+```
 
 
 
