@@ -124,13 +124,114 @@ commitizen init cz-conventional-changelog --save --save-exact
 
 > git commit命令，一律改为使用git cz
 
+2. validate-commit-msg
+
+> 校验commit是否符合规范
+
+[配置方法](https://www.npmjs.com/package/validate-commit-msg)
+
+3. conventional-changelog
+
+> 生成 Change log 的工具
+
+- 全局安装
+
+``` js
+npm install -g conventional-changelog-cli
+```
+
+- 在项目中生成上次发布以来的log
+``` js
+conventional-changelog -p angular -i CHANGELOG.md -w
+```
+
+- 生成所有发布的change log
+``` js
+conventional-changelog -p angular -i CHANGELOG.md -w -r 0
+```
+
+### git常用命令
+
+#### 标签
+
+**列出所有tag**
+
+```
+git tag
+```
+
+**新建一个tag在当前commit**
+
+```
+git tag [tag]
+```
+
+**新建一个tag在指定commit**
+```
+git tag [tag] [commit]
+```
+
+**删除本地tag**
+```
+git tag -d [tag]
+```
+
+**删除远程tag**
+```
+git push origin :refs/tags/[tagName]
+```
+
+**查看tag信息**
+
+```
+git show [tag]
+```
+
+**提交指定tag**
+
+```
+git push [remote] [tag]
+```
+
+**提交所有tag**
+
+```
+git push [remote] --tags
+```
+
+**新建一个分支，指向某个tag**
+
+```
+git checkout -b [branch] [tag]
+```
 
 
+### 应用场景
 
-
-
-
-
+**开发新功能**
+1. 自dev分支新建分支feature-sayhello分支
+```
+git checkout -b feature-sayhello
+```
+2. 开发完成后合并到dev分支
+```
+git merge --no--ff feature-sayhello
+```
+3. 自dev分支创建release-v1.0分支，提交测试
+```
+git checkout -b release-v1.0
+```
+4. 测试通过后分别合并至dev分支及master分支
+```
+git checkout dev
+git merge --no--ff release-v1.0
+git checkout master
+git merge --no--ff release-v1.0
+```
+5. 再master分支打上tag
+```
+git tag v1.0_21.2.3
+```
 
 
 
@@ -200,7 +301,7 @@ commitizen init cz-conventional-changelog --save --save-exact
 
 ![](./使用no.png)
 
-[长生命周期分支](#长生命周期分支)
+[返回长生命周期分支](#长生命周期分支)
 
 
 
