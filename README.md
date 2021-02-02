@@ -4,12 +4,16 @@
 
 ## git flow工作流
 
+Git的特色之一就是可以灵活的建立分支，因为有分支的存在，才构成了多工作流的特色。同时因为其灵活性，也应运而生出分支杂乱的问题，像下图这样：
+
 ![](./杂乱的分支.png)
 
 为了解决杂乱的工作流，而产生的分支管理策略
 
 ![](./flow工作流.png)
 
+
+[三大git分支管理策略](#三大git分支管理策略)
 
 
 ### 分支
@@ -205,6 +209,20 @@ git push [remote] --tags
 git checkout -b [branch] [tag]
 ```
 
+**别名**
+```
+git config alias.co checkout
+git config alias.ad 'add .'
+```
+
+> 之后直接使用git ad \ git co 即可
+
+1. 超级log
+```
+git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+
+git config --global alias.llg 'log --graph --decorate --oneline --simplify-by-decoration --all'
+```
 
 ### 应用场景
 
@@ -213,19 +231,23 @@ git checkout -b [branch] [tag]
 ``` js
 git checkout -b feature-sayhello
 ```
-2. 开发完成后合并到dev分支
+2. 开发完成后合并到dev分支，合并前需要先pull远程分支代码
 ``` js
+git checkout dev
+git pull
 git merge --no--ff feature-sayhello
 ```
 3. 自dev分支创建release-v1.0分支，提交测试
 ``` js
 git checkout -b release-v1.0
 ```
-4. 测试通过后分别合并至dev分支及master分支
+4. 测试通过后分别合并至dev分支及master分支，合并前需要先pull远程分支代码
 ``` js
 git checkout dev
+git pull
 git merge --no--ff release-v1.0
 git checkout master
+git pull
 git merge --no--ff release-v1.0
 ```
 5. 在master分支打上tag
@@ -244,11 +266,13 @@ git branch -D release-v1.0
 ``` js
 git checkout -b fixbug-v1.0 v1.0_21.2.2    
 ```
-2. 修复问题并测试通过后分别合并至dev及master分支
+2. 修复问题并测试通过后分别合并至dev及master分支，合并前需要先pull远程分支代码
 ``` js
 git checkout dev
+git pull
 git merge --no--ff fixbug-v1.0
 git checkout master
+git pull
 git merge --no--ff fixbug-v1.0
 ```
 3. 在master分支打上tag
@@ -278,58 +302,9 @@ git push --force origin master
 
 
 
+# 说明
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#### --no-ff参数说明
+### --no-ff参数说明
 
 1. 未使用--no-ff参数
 
@@ -339,21 +314,29 @@ git push --force origin master
 
 ![](./使用no.png)
 
-[返回长生命周期分支](#长生命周期分支)
+[长生命周期分支](#长生命周期分支)
+
+### 三大git分支管理策略
+
+1. Git Flow是 Vincent Driessen 2010 年发布出来的他自己的分支管理模型，属于强流程性，使用度非常高，比较适合开发技术能力中等的团队作战。
+2. GitHub Flow 是大型程序员交友社区 GitHub 制定并使用的工作流模型，由 scott chacon 在 2011 年 8月 31 号正式发布。
+    - 只有一个长期分支 master ,而且 master 分支上的代码，永远是可发布状态,一般 master 会设置 protected 分支保护，只有有权限的人才能推送代码到 master 分支。
+    - 如果有新功能开发，可以从 master 分支上检出新分支。
+    - 在本地分支提交代码，并且保证按时向远程仓库推送。
+    - 当你需要反馈或者帮助，或者你想合并分支时，可以发起一个 pull request。
+    - 当 review 或者讨论通过后，代码会合并到目标分支。
+    - 一旦合并到 master 分支，应该立即发布。
+3. GitLab Flow是 GitLab 的 CEO Sytse Sijbrandij 在 2014 年 9月 29 正式发布出来的。
+
+[分支](#分支)
 
 
 
-
-
-
-
-
-
-# 延申阅读
-- 三大分支管理策略
-
-
+### 延申阅读
 [Git操作指南: 企业级项目分支管理流程 - SourceTree Mac 版](https://www.mdeditor.tw/pl/p7L4)
+[git 三大分支管理策略](https://zhuanlan.zhihu.com/p/50063660)
+
+### 参考资料
 
 [git flow分支管理策略](https://developer.ibm.com/zh/articles/os-cn-git-and-github-5/)
 [Git flow实践](https://cloud.tencent.com/developer/article/1592957)
@@ -366,11 +349,6 @@ git push --force origin master
 [分支管理项目简单实践](https://www.cnblogs.com/spec-dog/p/11043371.html)
 [Git 工作流程](http://www.ruanyifeng.com/blog/2015/12/git-workflow.html)
 [Git分支管理实践-撤销](https://zhuanlan.zhihu.com/p/72946397)
-<!-- [设置保护](https://help.coding.net/docs/host/branch.html) -->
-<!-- [化简为繁](https://my.oschina.net/u/4026710/blog/4381609) -->
-<!-- [新建与合并](https://git-scm.com/book/zh/v2/Git-%E5%88%86%E6%94%AF-%E5%88%86%E6%94%AF%E7%9A%84%E6%96%B0%E5%BB%BA%E4%B8%8E%E5%90%88%E5%B9%B6) -->
-
-
 
 
 
