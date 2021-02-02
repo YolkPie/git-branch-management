@@ -210,28 +210,33 @@ git checkout -b [branch] [tag]
 
 **开发新功能**
 1. 自dev分支新建分支feature-sayhello分支
-```
+``` js
 git checkout -b feature-sayhello
 ```
 2. 开发完成后合并到dev分支
-```
+``` js
 git merge --no--ff feature-sayhello
 ```
 3. 自dev分支创建release-v1.0分支，提交测试
-```
+``` js
 git checkout -b release-v1.0
 ```
 4. 测试通过后分别合并至dev分支及master分支
-```
+``` js
 git checkout dev
 git merge --no--ff release-v1.0
 git checkout master
 git merge --no--ff release-v1.0
 ```
 5. 在master分支打上tag
-```
+``` js
 git tag v1.0_21.2.3
-git push origin --tags
+git push origin v1.0_21.2.3
+```
+6. 删除开发分支
+``` js
+git branch -D feature-sayhello
+git branch -D release-v1.0
 ```
 
 **修复线上问题**
@@ -240,13 +245,23 @@ git push origin --tags
 git checkout -b fixbug-v1.0 v1.0_21.2.2    
 ```
 2. 修复问题并测试通过后分别合并至dev及master分支
-```
+``` js
 git checkout dev
 git merge --no--ff fixbug-v1.0
 git checkout master
 git merge --no--ff fixbug-v1.0
 ```
+3. 在master分支打上tag
+``` js
+git tag v1.3_21.2.2 -m 'fixbug:修复线上问题'
+git push origin v1.3_21.2.2
+```
+4. 删除fixbug分支
+``` js
+git branch -D fixbug-v1.0
+```
 
+**线上回退到某tag**
 
 
 
