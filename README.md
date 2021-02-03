@@ -106,7 +106,6 @@ git log <last release> HEAD --grep feature
 
 3. **参数说明**
 
-1. Header
 - type（必需）用于说明 commit 的类别
 
 > <font color='red' size='3'>feat：</font> 新功能（feature） <br/>
